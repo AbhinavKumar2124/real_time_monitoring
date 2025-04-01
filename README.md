@@ -1,4 +1,4 @@
-# HiiReal-Time System Monitor
+# Real-Time System Monitor
 
 A real-time system monitoring dashboard built with Streamlit and Flask that provides live insights into your system's performance.
 
@@ -37,7 +37,7 @@ A real-time system monitoring dashboard built with Streamlit and Flask that prov
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/real_time_monitoring.git
+git clone https://github.com/AbhinavKumar2124/real_time_monitoring.git
 cd real_time_monitoring
 ```
 
