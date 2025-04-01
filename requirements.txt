@@ -1,0 +1,7 @@
+streamlit==1.32.0
+requests==2.31.0
+plotly==5.18.0
+pandas==2.2.1
+psutil==5.9.8
+flask==3.0.2
+flask-cors==4.0.0
