@@ -1,4 +1,4 @@
-# Real-Time System Monitor
+# HiiReal-Time System Monitor
 
 A real-time system monitoring dashboard built with Streamlit and Flask that provides live insights into your system's performance.
 
