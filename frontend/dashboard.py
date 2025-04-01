@@ -266,7 +266,7 @@ elif page == "Process Manager":
                     df_new['cpu_percent'] = df_new['cpu_percent'].round(2).astype(str) + '%'
                     df_new['memory_percent'] = df_new['memory_percent'].round(2).astype(str) + '%'
                     df_new.columns = ['Process ID', 'Process Name', 'User', 'CPU Usage', 'Memory Usage', 'Status']
-                    table_placeholder.dataframe(df_new, hide_index=True, height=700)
+                    table_placeholder.dataframe(df_new, hide_index=True, height=700, use_container_width=True)
                 else:
                     table_placeholder.warning("No processes found on the system.")
                 processes_data = fetch_processes()
