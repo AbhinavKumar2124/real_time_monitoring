@@ -25,11 +25,11 @@ st.set_page_config(page_title='System Monitor', page_icon=':computer:', layout='
 load_css()
 
 st.sidebar.image("https://picsum.photos/400/200?lock=1", width=300)
-st.sidebar.title('System Monitor')
+st.sidebar.title('Navigation')
 st.sidebar.divider()
 #-----------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------
-page = st.sidebar.radio("Go to", ["Home", "Process Manager", "Alerts & Customization", "About Us (. ❛ ᴗ ❛.) (>'-'<) (◠‿◠✿)"])
+page = st.sidebar.radio("Go to", ["Home", "Process Manager", "Alerts & Customization", "About Us (. ❛ ᴗ ❛.) (>'-'<) (◠‿◠✿)"], key="page_selector")
 
 # Create empty containers for each page
 home_container = st.empty()
@@ -41,6 +41,37 @@ if page == "Home":
 #This is the home page of the system monitor, displaying the CPU, Memory, Disk, and Network usage alongwith their respective charts.
 #-----------------------------------------------------------------------------------------------------------------------------------
     with home_container.container():
+
+        # Custom title and description with HTML/CSS
+        st.markdown("""
+            <div style='text-align: left; padding: 1em 0;'>
+                <h1 style='
+                    font-size: 3.5em; 
+                    margin-bottom: 0.2em;
+                    background: linear-gradient(120deg, rgb(254, 75, 74), rgba(255, 158, 67, 0.877));
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    text-fill-color: transparent;
+                    font-weight: 600;
+                    letter-spacing: -1px;
+                    text-shadow: 2px 2px 10px rgba(254, 75, 74, 0.2);
+                '>Real-Time System Monitor</h1>
+                <p style='
+                    font-size: 1.2em; 
+                    margin-bottom: 2em;
+                    background: linear-gradient(120deg, rgba(255, 158, 67, 0.877), rgb(254, 75, 74));
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    text-fill-color: transparent;
+                    opacity: 0.9;
+                '>
+                    Visualize and analyze your system's performance metrics with our advanced monitoring system.
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+
         st.title('Task Manager')
 
         # Placeholders for metrics
@@ -153,32 +184,135 @@ if page == "Home":
 
                 # Updating charts
                 cpu_fig = go.Figure()
-                cpu_fig.add_trace(go.Scatter(x=x_labels, y=list(cpu_history), mode='lines+markers', name="CPU Usage", line=dict(color="blue")))
+                cpu_fig.add_trace(go.Scatter(
+                    x=x_labels,
+                    y=list(cpu_history),
+                    mode='lines',
+                    name="CPU Usage",
+                    line=dict(color="#39FF14", width=2),
+                    fill='tozeroy',
+                    fillcolor='rgba(57, 255, 20, 0.1)'
+                ))
                 cpu_fig.update_xaxes(tickvals=x_labels, ticktext=list(timestamps), showgrid=True, gridwidth=1, gridcolor='#4F4C4D')
                 cpu_fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='#4F4C4D')
-                cpu_fig.update_layout(yaxis_title='CPU Usage (%)')
+                cpu_fig.update_layout(
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color='#ffffff'),
+                    margin=dict(l=20, r=20, t=20, b=20),
+                    showlegend=False,
+                    yaxis=dict(
+                        gridcolor='rgba(255,255,255,0.1)',
+                        range=[0, 100]
+                    ),
+                    xaxis=dict(
+                        gridcolor='rgba(255,255,255,0.1)'
+                    ),
+                    yaxis_title='CPU Usage (%)'
+                )
                 cpu_chart.plotly_chart(cpu_fig, use_container_width=True)
                 
                 memory_fig = go.Figure()
-                memory_fig.add_trace(go.Scatter(x=x_labels, y=list(memory_history), mode='lines+markers', name="Memory Usage", line=dict(color="green")))
+                memory_fig.add_trace(go.Scatter(
+                    x=x_labels,
+                    y=list(memory_history),
+                    mode='lines',
+                    name="Memory Usage",
+                    line=dict(color="#40E0D0", width=2),
+                    fill='tozeroy',
+                    fillcolor='rgba(64, 224, 208, 0.1)'
+                ))
                 memory_fig.update_xaxes(tickvals=x_labels, ticktext=list(timestamps), showgrid=True, gridwidth=1, gridcolor='#4F4C4D')
                 memory_fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='#4F4C4D')
-                memory_fig.update_layout(yaxis_title='Memory Usage (%)')
+                memory_fig.update_layout(
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color='#ffffff'),
+                    margin=dict(l=20, r=20, t=20, b=20),
+                    showlegend=False,
+                    yaxis=dict(
+                        gridcolor='rgba(255,255,255,0.1)',
+                        range=[0, 100]
+                    ),
+                    xaxis=dict(
+                        gridcolor='rgba(255,255,255,0.1)'
+                    ),
+                    yaxis_title='Memory Usage (%)'
+                )
                 memory_chart.plotly_chart(memory_fig, use_container_width=True)
                 
                 disk_fig = go.Figure()
-                disk_fig.add_trace(go.Scatter(x=x_labels, y=list(disk_history), mode='lines+markers', name="Disk Usage", line=dict(color="red")))
+                disk_fig.add_trace(go.Scatter(
+                    x=x_labels,
+                    y=list(disk_history),
+                    mode='lines',
+                    name="Disk Usage",
+                    line=dict(color="#FF69B4", width=2),
+                    fill='tozeroy',
+                    fillcolor='rgba(255, 105, 180, 0.1)'
+                ))
                 disk_fig.update_xaxes(tickvals=x_labels, ticktext=list(timestamps), showgrid=True, gridwidth=1, gridcolor='#4F4C4D')
                 disk_fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='#4F4C4D')
-                disk_fig.update_layout(yaxis_title='Disk Usage (%)')
+                disk_fig.update_layout(
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color='#ffffff'),
+                    margin=dict(l=20, r=20, t=20, b=20),
+                    showlegend=False,
+                    yaxis=dict(
+                        gridcolor='rgba(255,255,255,0.1)',
+                        range=[0, 100]
+                    ),
+                    xaxis=dict(
+                        gridcolor='rgba(255,255,255,0.1)'
+                    ),
+                    yaxis_title='Disk Usage (%)'
+                )
                 disk_chart.plotly_chart(disk_fig, use_container_width=True)
 
                 network_fig = go.Figure()
-                network_fig.add_trace(go.Scatter(x=x_labels, y=list(upload_speed_history), mode='lines+markers', name="Upload Speed", line=dict(color="#E13F75")))
-                network_fig.add_trace(go.Scatter(x=x_labels, y=list(download_speed_history), mode='lines+markers', name="Download Speed", line=dict(color="#8F26AB")))
+                network_fig.add_trace(go.Scatter(
+                    x=x_labels,
+                    y=list(upload_speed_history),
+                    mode='lines',
+                    name="Upload Speed",
+                    line=dict(color="#E13F75", width=2),
+                    fill='tozeroy',
+                    fillcolor='rgba(225, 63, 117, 0.1)'
+                ))
                 network_fig.update_xaxes(tickvals=x_labels, ticktext=list(timestamps), showgrid=True, gridwidth=1, gridcolor='#4F4C4D')
                 network_fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='#4F4C4D')
-                network_fig.update_layout(yaxis_title='Speed (MBps)')
+                network_fig.add_trace(go.Scatter(
+                    x=x_labels,
+                    y=list(download_speed_history),
+                    mode='lines',
+                    name="Download Speed",
+                    line=dict(color="#8F26AB", width=2),
+                    fill='tozeroy',
+                    fillcolor='rgba(143, 38, 171, 0.1)'
+                ))
+                network_fig.update_layout(
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color='#ffffff'),
+                    margin=dict(l=20, r=20, t=20, b=20),
+                    showlegend=True,
+                    legend=dict(
+                        yanchor="top",
+                        y=0.99,
+                        xanchor="left",
+                        x=0.01,
+                        font=dict(color='#ffffff'),
+                        bgcolor='rgba(0,0,0,0)'
+                    ),
+                    yaxis=dict(
+                        gridcolor='rgba(255,255,255,0.1)'
+                    ),
+                    xaxis=dict(
+                        gridcolor='rgba(255,255,255,0.1)'
+                    ),
+                    yaxis_title='Speed (KBps)'
+                )
                 network_chart.plotly_chart(network_fig, use_container_width=True)
 
             time.sleep(0.5)

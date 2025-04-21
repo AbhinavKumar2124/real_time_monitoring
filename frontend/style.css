@@ -1,21 +1,68 @@
-/* Main App Styles */
-/* .stApp {
-    background-color: #f0f2f6;
-    color: #1f1f1f;
-} */
+/* Modern Dark Theme Variables */
+:root {
+    --primary-red: rgb(254, 75, 74);
+    --secondary-orange: rgba(255, 158, 67, 0.877);
+    --dark-bg: #000000;
+    --darker-bg: #15152b;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --gradient-primary: linear-gradient(120deg, var(--primary-red), var(--secondary-orange));
+    --gradient-secondary: linear-gradient(120deg, var(--secondary-orange), var(--primary-red));
+    --gradient-background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(21, 21, 43, 0.95) 100%);
+    --shadow-primary: 0 0 20px rgba(254, 75, 74, 0.2);
+    --shadow-secondary: 0 0 20px rgba(255, 159, 67, 0.2);
+}
 
-/* Sidebar Styles */
-/* .stSidebar {
-    
-} */
+/* Main App Background */
+.stApp {
+    /*background: var(--gradient-background) !important;*/
+    backdrop-filter: blur(20px) !important;
+    min-height: 100vh;
+}
 
-/* Title Styles */
-/* .stTitle {
-    color: #1f1f1f;
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 2rem;
-} */
+/* Sidebar Styling */
+[data-testid="stSidebar"] {
+    /*background: rgba(24, 24, 31, 0.75) !important;*/
+    border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(15px) !important;
+}
+
+.stSidebar [data-testid="stMarkdown"] {
+    color: white !important;
+}
+
+/* Metric Cards */
+[data-testid="stMetric"] {
+    background: var(--card-bg) !important;
+    border-radius: 15px !important;
+    padding: 1rem !important;
+    border: 1px solid rgba(254, 75, 74, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-testid="stMetric"]:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-primary) !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+}
+
+[data-testid="stMetricLabel"] {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    font-weight: 500 !important;
+}
+
+/* Charts */
+.js-plotly-plot {
+    background: var(--card-bg) !important;
+    border-radius: 15px !important;
+    /*border: 1px solid rgba(254, 75, 74, 0.2) !important;*/
+    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
 
 /* Metric Styles */
 .stMetric {
@@ -28,120 +75,71 @@
 
 /* Button Styles */
 .stButton>button {
-    /* background-color: #4CAF50; */
-    /* color: white; */
-    border: 1px solid #808080;
-    padding: 0.5rem 1rem;
-    border-radius: 0.3rem;
-    transition: all 0.3s ease;
+    background: linear-gradient(120deg, 
+        rgba(254, 75, 74, 0.8), 
+        rgba(255, 158, 67, 0.877)
+    ) !important;
+    border: none !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 0.3rem !important;
+    transition: all 0.3s ease !important;
+    backdrop-filter: blur(5px) !important;
+    color: white !important;
 }
 
 .stButton>button:hover {
-    /* background-color: #ffffff; */
-    transform: translateY(2px);
-    transition: all 0.3s ease;
+    background: linear-gradient(120deg, 
+        rgba(254, 75, 74, 0.9), 
+        rgba(255, 158, 67, 0.977)
+    ) !important;
+    transform: translateY(-2px) !important;
 }
-
-/* Slider Styles */
-/* .stSlider>div>div>div {
-    background-color: #4CAF50;
-} */
-
-/* Radio Button Styles */
-/* .stRadio>div {
-    background-color: #ffffff;
-    border-radius: 0.3rem;
-    padding: 0.5rem;
-} */
-
-/* Checkbox Styles */
-/* .stCheckbox>div>div {
-    background-color: #ffffff;
-    border-radius: 0.3rem;
-    padding: 0.5rem;
-} */
-
-/* Selectbox Styles */
-/* .stSelectbox>div>div {
-    background-color: #ffffff; 
-    border-radius: 0.3rem;
-    padding: 0.5rem;
-    box-shadow: 0 2px 4px rgba(139, 139, 139, 0.377);
-} */
 
 /* Table Styles */
 .stDataFrame {
-    background-color: #ffffff;
-    border-radius: 0.5rem;
-    /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
-    box-shadow: 0 2px 4px rgba(139, 139, 139, 0.377);
+    background: var(--card-bg) !important;
+    border-radius: 0.5rem !important;
+    border: 1px solid rgba(254, 74, 74, 0.575) !important;
+    backdrop-filter: blur(10px) !important;
 }
-
-/* Chart Container Styles */
-/* .element-container {
-    background-color: #ffffff;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 1rem;
-} */
 
 /* Divider Styles */
 .stDivider {
     margin: 2rem 0;
+    border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Warning Message Styles */
 .stWarning {
-    background-color: #fff3cd;
-    color: #856404;
-    border-radius: 0.3rem;
-    padding: 1rem;
-    margin: 1rem 0;
+    background: rgba(255, 243, 205, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) !important;
+    color: #ffd700 !important;
 }
 
 /* Success Message Styles */
 .stSuccess {
-    background-color: #d4edda;
-    color: #155724;
-    border-radius: 0.3rem;
-    padding: 1rem;
-    margin: 1rem 0;
+    background: rgba(212, 237, 218, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) !important;
+    color: var(--primary-red) !important;
 }
 
 /* Error Message Styles */
 .stError {
-    background-color: #f8d7da;
-    color: #721c24;
-    border-radius: 0.3rem;
-    padding: 1rem;
-    margin: 1rem 0;
+    background: rgba(248, 215, 218, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) !important;
+    color: var(--primary-red) !important;
 }
 
-/* Dark Theme Styles */
-/* [data-theme="dark"] .stApp {
-    background-color: #1E1E1E;
-    color: #FFFFFF;
+/* Animations *
+@keyframes glow {
+    0% { box-shadow: 0 0 5px rgba(57, 255, 20, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(57, 255, 20, 0.4); }
+    100% { box-shadow: 0 0 5px rgba(57, 255, 20, 0.2); }
 }
 
-[data-theme="dark"] .stMetric {
-    background-color: #2D2D2D;
-    color: #FFFFFF;
+.glow-effect {
+    animation: glow 2s infinite;
 }
-
-[data-theme="dark"] .stRadio>div,
-[data-theme="dark"] .stCheckbox>div>div,
-[data-theme="dark"] .stSelectbox>div>div {
-    background-color: #2D2D2D;
-    color: #FFFFFF;
-}
-
-[data-theme="dark"] .stDataFrame {
-    background-color: #2D2D2D;
-    color: #FFFFFF;
-}
-
-[data-theme="dark"] .element-container {
-    background-color: #2D2D2D;
-    color: #FFFFFF;
-}  */
