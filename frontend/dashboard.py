@@ -5,6 +5,11 @@ import plotly.graph_objects as go
 from collections import deque
 import pandas as pd
 import os
+#---------------------------------------------------------------------------------------------
+import base64
+from io import BytesIO
+from PIL import Image
+from streamlit.components.v1 import html
 
 # Load CSS
 def load_css():
@@ -25,7 +30,7 @@ st.set_page_config(page_title='System Monitor', page_icon=':computer:', layout='
 load_css()
 
 st.sidebar.image("https://picsum.photos/400/200?lock=1", width=300)
-st.sidebar.title('Navigation')
+st.sidebar.title('System Control Panel')
 st.sidebar.divider()
 #-----------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------
@@ -324,7 +329,13 @@ if page == "Home":
 elif page == "Process Manager":
 #This is the process manager page of the system monitor, displaying the list of processes running on the system.
 #-----------------------------------------------------------------------------------------------------------------------------------
+    
     with process_container.container():
+        st.title("Process Manager")
+        st.write("""
+            View and manage all active system processes with real-time monitoring of PID, CPU, memory, and execution state. 
+            Enable process termination, priority adjustment, and in-depth inspection to maintain optimal system control.
+        """)
         # Initialize session state if not exists
         if 'selected_pid' not in st.session_state:
             st.session_state.selected_pid = None
@@ -414,6 +425,10 @@ elif page == "Alerts & Customization":
 #-----------------------------------------------------------------------------------------------------------------------------------
     with alerts_container.container():
         st.title("Alerts & Customization")
+        st.write("""
+            Implement real-time alert systems to notify users of critical events based on customizable triggers. 
+            Fine-tune alert thresholds and delivery methods to optimize user experience and response times.
+        """)
 
         # Fetch current alert settings
         def fetch_alert_settings():
@@ -469,31 +484,142 @@ elif page == "Alerts & Customization":
 #-----------------------------------------------------------------------------------------------------------------------------------
 
 elif page == "About Us (. ❛ ᴗ ❛.) (>'-'<) (◠‿◠✿)":
-#This is the about us page of the system monitor, displaying the information about the developers of the system monitor.
-#-----------------------------------------------------------------------------------------------------------------------------------
     with about_container.container():
-        st.title("Khikhikhi ヾ(≧▽≦*)o")
-        st.write("😴😴💤💤💤💤💤💤💤💤")
+       
         
-        text_placeholder = st.empty()
-        text = ""
-        text1 = "ᶻ "
-        text2 = "𝗓 "
-        text3 = "𐰁 "
 
-        x=0
+        def image_to_base64(image):
+            buffered = BytesIO()
+            image.save(buffered, format="PNG")
+            return base64.b64encode(buffered.getvalue()).decode()
 
-        while True:
-            if x == 0:
-                text += text1
-            elif x == 1:
-                text += text2
-            elif x == 2:
-                text += text3
-            text_placeholder.write(text)
-            x += 1
-            x %= 3
-            #st.balloons()
-            time.sleep(0.1)
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+
+        image_files = {
+            "udit": "img1.jpg",
+            "abhinav": "img2.jpg", 
+            "arshia": "img3.jpg"
+        }
+
+        team_images = {}
+        for name, filename in image_files.items():
+            try:
+                img_path = os.path.join(base_dir, filename)
+                team_images[name] = Image.open(img_path)
+            except Exception as e:
+                st.error(f"Error loading {filename}: {str(e)}")
+                team_images[name] = Image.new('RGB', (400, 500), (30, 144, 255))
+
+        st.markdown("""
+        <style>
+    .team-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin: 2rem 0;
+    }
+    .team-card {
+        width: 300px;
+        background: rgba(30, 144, 255, 0.1);
+        border-radius: 15px;
+        padding: 0;
+        margin: 0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+    .team-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(30, 144, 255, 0.2);
+    }
+    .profile-img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        display: block;
+        transition: all 0.3s ease;
+    }
+    .profile-img:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.7) !important; /* Light glow effect */
+    }
+    .team-name {
+        text-align: center;
+        font-size: 1.5rem;
+        margin: 15px 0 30px 0;
+        color: #39FF14;
+        font-weight: 600;
+    }
+    .main-heading {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+</style>
+
+
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="main-heading">
+            <h1 style='
+                font-size: 2.8rem;
+                background: linear-gradient(90deg, #39FF14, #1E90FF);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            '>About Our Team</h1>
+            <p style='font-size: 1.1rem; color: rgba(255, 255, 255, 0.7);'>
+                The brilliant minds behind your monitoring experience
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.markdown(f"""
+            <div class="team-card">
+                <img src="data:image/png;base64,{image_to_base64(team_images['udit'])}" class="profile-img">
+            </div>
+            <p class="team-name">Udit Katiyar</p>
+            """, unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown(f"""
+            <div class="team-card">
+                <img src="data:image/png;base64,{image_to_base64(team_images['abhinav'])}" class="profile-img">
+            </div>
+            <p class="team-name">Abhinav Kumar</p>
+            """, unsafe_allow_html=True)
+        
+        with col3:
+            st.markdown(f"""
+            <div class="team-card">
+                <img src="data:image/png;base64,{image_to_base64(team_images['arshia'])}" class="profile-img">
+            </div>
+            <p class="team-name">Arshia Singh</p>
+            """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div style='margin-top: 3rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.03); border-radius: 15px;'>
+            <h2 style='color: #1E90FF; text-align: center;'>About the Project</h2>
+            <p style='line-height: 1.6; color: rgba(255, 255, 255, 0.8); text-align: center;'>
+                Our Real-Time System Monitoring Dashboard provides instant insights into your computer's performance metrics.
+                Built with passion and cutting-edge technology to deliver:
+            </p>
+            <ul style='color: rgba(255, 255, 255, 0.8); line-height: 1.8; max-width: 600px; margin: 1.5rem auto;'>
+                <li> <strong>Live resource monitoring</strong> (CPU, Memory, Disk, Network)</li>
+                <li> <strong>Interactive visualizations</strong> with historical data</li>
+                <li> <strong>Process management</strong> capabilities</li>
+                <li> <strong>Custom alert system</strong> for thresholds</li>
+            </ul>
+            <div style='margin-top: 2rem; padding: 1.2rem; background: rgba(57, 255, 20, 0.1); border-radius: 10px; max-width: 500px; margin-left: auto; margin-right: auto;'>
+                <p style='text-align: center; color: #39FF14; margin: 0; font-size: 1.1rem;'>
+                    <strong>Tech Stack:</strong> Python • Streamlit • Plotly • Flask • Pandas
+                </p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
 #About Us page completed.
 #-----------------------------------------------------------------------------------------------------------------------------------
