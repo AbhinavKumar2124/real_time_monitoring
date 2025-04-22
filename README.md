@@ -48,13 +48,13 @@ NODEX is a powerful, real-time system monitoring dashboard that provides live in
 
 ### Quick Start
 1. **Clone the repository**:
-   ```bash
+   ```
    git clone https://github.com/AbhinavKumar2124/real_time_monitoring.git
    cd real_time_monitoring
    ```
 
 2. **Set up virtual environment**:
-   ```bash
+   ```
    # Windows
    python -m venv venv
    venv\Scripts\activate
@@ -65,20 +65,20 @@ NODEX is a powerful, real-time system monitoring dashboard that provides live in
    ```
 
 3. **Install dependencies**:
-   ```bash
+   ```
    pip install -r requirements.txt
    ```
 
 ## 🚀 Getting Started
 
-1. **Start the backend server**:
-   ```bash
+1. **Start the backend server**:<br>(terminal 1)
+   ```
    cd backend
    python app.py
    ```
 
-2. **Launch NODEX**:
-   ```bash
+2. **Launch NODEX**:<br>(terminal 2)
+   ```
    cd frontend
    streamlit run dashboard.py
    ```
