@@ -8,7 +8,7 @@ import os
 #---------------------------------------------------------------------------------------------
 import base64
 from io import BytesIO
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 from streamlit.components.v1 import html
 
 # Load CSS
@@ -29,8 +29,8 @@ st.set_page_config(page_title='System Monitor', page_icon=':computer:', layout='
 # Load CSS
 load_css()
 
-st.sidebar.image("https://picsum.photos/400/200?lock=1", width=300)
-st.sidebar.title('System Control Panel')
+st.sidebar.image("logo name.png", width=300)
+st.sidebar.title('Monitor. Analyze. Control.')
 st.sidebar.divider()
 #-----------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------
@@ -46,36 +46,48 @@ if page == "Home":
 #This is the home page of the system monitor, displaying the CPU, Memory, Disk, and Network usage alongwith their respective charts.
 #-----------------------------------------------------------------------------------------------------------------------------------
     with home_container.container():
+        st.divider()
+        col1, col2, col3 = st.columns([4, 1.5, 2])
+        with col1:
+            # Custom title and description with HTML/CSS
+            st.markdown("""
+                <div style='text-align: left; padding: 1em 0;'>
+                    <h1 style='
+                        font-size: 3.5em; 
+                        margin-bottom: 0.2em;
+                        background: linear-gradient(120deg, #2cc012, #03ca66);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                        text-fill-color: transparent;
+                        font-weight: 600;
+                        letter-spacing: -1px;
+                        text-shadow: 2px 2px 10px rgba(44, 192, 18, 0.2);
+                        font-family: "Poppins", sans-serif;
+                    '>Real-Time<br>System Monitoring Solution</h1>
+                    <p style='
+                        font-size: 1.2em; 
+                        margin-bottom: 2em;
+                        background: linear-gradient(120deg, #03ca66, #2cc012);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                        text-fill-color: transparent;
+                        opacity: 0.9;
+                        font-family: "Montserrat", sans-serif;
+                    '>
+                        Keep a real‑time pulse on your machine’s health with dynamic dashboards that track CPU, memory, disk, and network metrics through interactive visualizations and customizable alerts. Seamlessly control processes—pausing, resuming, or terminating them directly from your browser—and receive instant notifications whenever performance drifts beyond your defined thresholds. Crafted for both power users and IT professionals alike, this local‑first solution delivers deep insights and hands‑on control without ever leaving your desktop.
+                    </p>
+                </div>
+            """, unsafe_allow_html=True)
 
-        # Custom title and description with HTML/CSS
-        st.markdown("""
-            <div style='text-align: left; padding: 1em 0;'>
-                <h1 style='
-                    font-size: 3.5em; 
-                    margin-bottom: 0.2em;
-                    background: linear-gradient(120deg, rgb(254, 75, 74), rgba(255, 158, 67, 0.877));
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                    text-fill-color: transparent;
-                    font-weight: 600;
-                    letter-spacing: -1px;
-                    text-shadow: 2px 2px 10px rgba(254, 75, 74, 0.2);
-                '>Real-Time System Monitor</h1>
-                <p style='
-                    font-size: 1.2em; 
-                    margin-bottom: 2em;
-                    background: linear-gradient(120deg, rgba(255, 158, 67, 0.877), rgb(254, 75, 74));
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                    text-fill-color: transparent;
-                    opacity: 0.9;
-                '>
-                    Visualize and analyze your system's performance metrics with our advanced monitoring system.
-                </p>
-            </div>
-        """, unsafe_allow_html=True)
+            # if st.button("Execute Command"):
+            #     page = "Process Manager"
+
+        with col3:
+            st.image("logo combined new.png", width=600)
+
+        st.divider()
 
         st.title('Task Manager')
 
@@ -329,13 +341,42 @@ if page == "Home":
 elif page == "Process Manager":
 #This is the process manager page of the system monitor, displaying the list of processes running on the system.
 #-----------------------------------------------------------------------------------------------------------------------------------
-    
     with process_container.container():
-        st.title("Process Manager")
-        st.write("""
-            View and manage all active system processes with real-time monitoring of PID, CPU, memory, and execution state. 
-            Enable process termination, priority adjustment, and in-depth inspection to maintain optimal system control.
-        """)
+        col1, col2 = st.columns([3.7, 2])
+        with col1:
+            st.markdown("""
+                <div style='text-align: left; padding: 1em 0;'>
+                    <h1 style='
+                        font-size: 3.5em; 
+                        margin-bottom: 0.2em;
+                        background: linear-gradient(120deg, #2cc012, #03ca66);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                        text-fill-color: transparent;
+                        font-weight: 600;
+                        letter-spacing: -1px;
+                        text-shadow: 2px 2px 10px rgba(44, 192, 18, 0.2);
+                        font-family: "Poppins", sans-serif;
+                    '>Process Manager</h1>
+                    <p style='
+                        font-size: 1.2em; 
+                        margin-bottom: 2em;
+                        background: linear-gradient(120deg, #03ca66, #2cc012);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                        text-fill-color: transparent;
+                        opacity: 0.9;
+                        font-family: "Montserrat", sans-serif;
+                    '>
+                        Gain complete visibility and control over all running system processes with real-time insights into process IDs, CPU and memory usage, execution states, and more. Effortlessly sort, search, and terminate processes from an intuitive interface designed for precision and performance—all without leaving your browser.
+                    </p>
+                </div>
+            """, unsafe_allow_html=True)
+
+        st.divider()
+
         # Initialize session state if not exists
         if 'selected_pid' not in st.session_state:
             st.session_state.selected_pid = None
@@ -424,11 +465,36 @@ elif page == "Alerts & Customization":
 #This is the alerts and customization page of the system monitor, displaying the list of alerts and customization options.
 #-----------------------------------------------------------------------------------------------------------------------------------
     with alerts_container.container():
-        st.title("Alerts & Customization")
-        st.write("""
-            Implement real-time alert systems to notify users of critical events based on customizable triggers. 
-            Fine-tune alert thresholds and delivery methods to optimize user experience and response times.
-        """)
+        st.markdown("""
+            <div style='text-align: left; padding: 1em 0;'>
+                <h1 style='
+                    font-size: 3.5em; 
+                    margin-bottom: 0.2em;
+                    background: linear-gradient(120deg, #2cc012, #03ca66);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    text-fill-color: transparent;
+                    font-weight: 600;
+                    letter-spacing: -1px;
+                    text-shadow: 2px 2px 10px rgba(44, 192, 18, 0.2);
+                    font-family: "Poppins", sans-serif;
+                '>Alerts & Customization</h1>
+                <p style='
+                    font-size: 1.2em; 
+                    margin-bottom: 2em;
+                    background: linear-gradient(120deg, #03ca66, #2cc012);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    text-fill-color: transparent;
+                    opacity: 0.9;
+                    font-family: "Montserrat", sans-serif;
+                '>
+                    Implement real-time alert systems to notify users of critical events based on customizable triggers.
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
 
         # Fetch current alert settings
         def fetch_alert_settings():
@@ -484,137 +550,228 @@ elif page == "Alerts & Customization":
 #-----------------------------------------------------------------------------------------------------------------------------------
 
 elif page == "About Us (. ❛ ᴗ ❛.) (>'-'<) (◠‿◠✿)":
+#This is the about us page of the system monitor, displaying the information about the developers of the system monitor.
+#-----------------------------------------------------------------------------------------------------------------------------------
     with about_container.container():
-       
-        
-
         def image_to_base64(image):
-            buffered = BytesIO()
-            image.save(buffered, format="PNG")
-            return base64.b64encode(buffered.getvalue()).decode()
+            try:
+                buffered = BytesIO()
+                image.save(buffered, format="PNG", optimize=True)
+                return base64.b64encode(buffered.getvalue()).decode()
+            except Exception as e:
+                st.error(f"Error converting image to base64: {str(e)}")
+                return ""
 
         base_dir = os.path.dirname(os.path.abspath(__file__))
-
-        image_files = {
-            "udit": "img1.jpg",
-            "abhinav": "img2.jpg", 
-            "arshia": "img3.jpg"
+        
+        # Team member information
+        team_members = {
+            "abhinav": {
+                "name": "ABHINAV",
+                "image": "img2.jpg",
+                "role": "Backend Developer"
+            },
+            "udit": {
+                "name": "UDIT KATIYAR",
+                "image": "img1.jpg",
+                "role": "Frontend Developer"
+            },
+            "arshia": {
+                "name": "ARSHIA SINGH",
+                "image": "img3.jpg",
+                "role": "UI/UX Designer"
+            }
         }
 
+        # Load team images with better error handling
         team_images = {}
-        for name, filename in image_files.items():
+        for member_id, member_info in team_members.items():
             try:
-                img_path = os.path.join(base_dir, filename)
-                team_images[name] = Image.open(img_path)
+                img_path = os.path.join(base_dir, member_info["image"])
+                if os.path.exists(img_path):
+                    team_images[member_id] = Image.open(img_path)
+                else:
+                    raise FileNotFoundError(f"Image file not found: {member_info['image']}")
             except Exception as e:
-                st.error(f"Error loading {filename}: {str(e)}")
-                team_images[name] = Image.new('RGB', (400, 500), (30, 144, 255))
+                st.error(f"Error loading {member_info['image']}: {str(e)}")
+                # Create a placeholder image with member's initial
+                team_images[member_id] = Image.new('RGB', (400, 500), (0, 0, 0))
+                # Add text to placeholder image
+                draw = ImageDraw.Draw(team_images[member_id])
+                font = ImageFont.truetype("arial.ttf", 100)
+                draw.text((150, 200), member_info["name"][0], fill=(57, 255, 20), font=font)
 
         st.markdown("""
         <style>
-    .team-container {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        margin: 2rem 0;
-    }
-    .team-card {
-        width: 300px;
-        background: rgba(30, 144, 255, 0.1);
-        border-radius: 15px;
-        padding: 0;
-        margin: 0;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
-        overflow: hidden;
-    }
-    .team-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(30, 144, 255, 0.2);
-    }
-    .profile-img {
-        width: 100%;
-        height: 400px;
-        object-fit: cover;
-        display: block;
-        transition: all 0.3s ease;
-    }
-    .profile-img:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.7) !important; /* Light glow effect */
-    }
-    .team-name {
-        text-align: center;
-        font-size: 1.5rem;
-        margin: 15px 0 30px 0;
-        color: #39FF14;
-        font-weight: 600;
-    }
-    .main-heading {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-</style>
-
-
+            .team-container {
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                margin: 2rem 0;
+                flex-wrap: wrap;
+            }
+            .team-card {
+                width: 300px;
+                background: rgba(44, 192, 18, 0.05);
+                border-radius: 15px;
+                padding: 0;
+                margin: 0 auto;  /* Center the card */
+                border: 1px solid rgba(44, 192, 18, 0.2);
+                transition: all 0.3s ease;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                align-items: center;  /* Center content horizontally */
+            }
+            .team-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 0 20px rgba(57, 255, 20, 0.8);
+            }
+            .profile-img {
+                width: 100%;
+                height: 400px;
+                object-fit: cover;
+                display: block;
+                transition: all 0.3s ease;
+                margin: 0 auto;  /* Center the image */
+            }
+            .profile-img:hover {
+                transform: translateY(-2px) !important;
+                box-shadow: 0 0 20px rgba(57, 255, 20, 0.7) !important;
+            }
+            .team-name {
+                text-align: center;
+                font-size: 1.5rem;
+                margin: 15px 0 5px 0;
+                background: linear-gradient(120deg, #2cc012, #03ca66);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                font-family: 'Poppins', sans-serif;
+                font-weight: 600;
+                width: 100%;  /* Ensure full width for centering */
+            }
+            .team-role {
+                text-align: center;
+                font-size: 1rem;
+                margin: 0 0 30px 0;
+                color: rgba(44, 192, 18, 0.7);
+                font-family: 'Montserrat', sans-serif;
+                width: 100%;  /* Ensure full width for centering */
+            }
+            .main-heading {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            @media (max-width: 768px) {
+                .team-container {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                .team-card {
+                    width: 100%;
+                    max-width: 300px;
+                }
+            }
+        </style>
         """, unsafe_allow_html=True)
 
         st.markdown("""
         <div class="main-heading">
             <h1 style='
                 font-size: 2.8rem;
-                background: linear-gradient(90deg, #39FF14, #1E90FF);
+                background: linear-gradient(120deg, #2cc012, #03ca66);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
-            '>About Our Team</h1>
-            <p style='font-size: 1.1rem; color: rgba(255, 255, 255, 0.7);'>
+                font-family: "Poppins", sans-serif;
+                font-weight: 600;
+            '>Meet the Team</h1>
+            <p style='
+                font-size: 1.1rem; 
+                color: rgba(44, 192, 18, 0.7);
+                font-family: "Montserrat", sans-serif;
+                margin-bottom: 2rem;
+            '>
                 The brilliant minds behind your monitoring experience
             </p>
         </div>
         """, unsafe_allow_html=True)
 
-        col1, col2, col3 = st.columns(3)
-        
-        with col1:
-            st.markdown(f"""
-            <div class="team-card">
-                <img src="data:image/png;base64,{image_to_base64(team_images['udit'])}" class="profile-img">
-            </div>
-            <p class="team-name">Udit Katiyar</p>
-            """, unsafe_allow_html=True)
-        
-        with col2:
-            st.markdown(f"""
-            <div class="team-card">
-                <img src="data:image/png;base64,{image_to_base64(team_images['abhinav'])}" class="profile-img">
-            </div>
-            <p class="team-name">Abhinav Kumar</p>
-            """, unsafe_allow_html=True)
-        
-        with col3:
-            st.markdown(f"""
-            <div class="team-card">
-                <img src="data:image/png;base64,{image_to_base64(team_images['arshia'])}" class="profile-img">
-            </div>
-            <p class="team-name">Arshia Singh</p>
-            """, unsafe_allow_html=True)
+        st.divider()
+        st.markdown("<br>", unsafe_allow_html=True)  # Add line gap
+
+        # Create team member cards
+        cols = st.columns(3)
+        for idx, (member_id, member_info) in enumerate(team_members.items()):
+            with cols[idx]:
+                st.markdown(f"""
+                <div class="team-card">
+                    <img src="data:image/png;base64,{image_to_base64(team_images[member_id])}" class="profile-img">
+                </div>
+                <p class="team-name"><br>{member_info['name']}</p>
+                <p class="team-role">{member_info['role']}</p>
+                """, unsafe_allow_html=True)
+                st.markdown("<br>", unsafe_allow_html=True)  # Add line gap after each card
+
+        st.markdown("<br>", unsafe_allow_html=True)  # Add line gap before project section
+        st.divider()
+        st.markdown("<br>", unsafe_allow_html=True)  # Add line gap after divider
 
         st.markdown("""
-        <div style='margin-top: 3rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.03); border-radius: 15px;'>
-            <h2 style='color: #1E90FF; text-align: center;'>About the Project</h2>
-            <p style='line-height: 1.6; color: rgba(255, 255, 255, 0.8); text-align: center;'>
+        <div style='
+            margin-top: 3rem; 
+            padding: 1.5rem; 
+            background: rgba(44, 192, 18, 0.03); 
+            border-radius: 15px;
+            border: 1px solid rgba(44, 192, 18, 0.1);
+        '>
+            <h2 style='
+                color: #2cc012; 
+                text-align: center;
+                font-family: "Poppins", sans-serif;
+                margin-bottom: 1.5rem;
+            '>About the Project</h2>
+            <p style='
+                line-height: 1.6; 
+                color: rgba(44, 192, 18, 0.8); 
+                text-align: center;
+                font-family: "Montserrat", sans-serif;
+                margin-bottom: 1.5rem;
+            '>
                 Our Real-Time System Monitoring Dashboard provides instant insights into your computer's performance metrics.
                 Built with passion and cutting-edge technology to deliver:
             </p>
-            <ul style='color: rgba(255, 255, 255, 0.8); line-height: 1.8; max-width: 600px; margin: 1.5rem auto;'>
+            <ul style='
+                color: rgba(44, 192, 18, 0.8); 
+                line-height: 1.8; 
+                max-width: 600px; 
+                margin: 1.5rem auto;
+                font-family: "Montserrat", sans-serif;
+                margin-bottom: 1.5rem;
+            '>
                 <li> <strong>Live resource monitoring</strong> (CPU, Memory, Disk, Network)</li>
                 <li> <strong>Interactive visualizations</strong> with historical data</li>
                 <li> <strong>Process management</strong> capabilities</li>
                 <li> <strong>Custom alert system</strong> for thresholds</li>
             </ul>
-            <div style='margin-top: 2rem; padding: 1.2rem; background: rgba(57, 255, 20, 0.1); border-radius: 10px; max-width: 500px; margin-left: auto; margin-right: auto;'>
-                <p style='text-align: center; color: #39FF14; margin: 0; font-size: 1.1rem;'>
+            <div style='
+                margin-top: 2rem; 
+                padding: 1.2rem; 
+                background: rgba(44, 192, 18, 0.1); 
+                border-radius: 10px; 
+                max-width: 500px; 
+                margin-left: auto; 
+                margin-right: auto;
+                border: 1px solid rgba(44, 192, 18, 0.2);
+            '>
+                <p style='
+                    text-align: center; 
+                    color: #2cc012; 
+                    margin: 0; 
+                    font-size: 1.1rem;
+                    font-family: "Poppins", sans-serif;
+                '>
                     <strong>Tech Stack:</strong> Python • Streamlit • Plotly • Flask • Pandas
                 </p>
             </div>

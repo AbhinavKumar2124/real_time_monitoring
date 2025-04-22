@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 #-----------------------------------------------------------------------------------------
-ALERTS_FILE = "alerts.json"
+ALERTS_FILE = "backend/alerts.json"
 
 # Load saved alerts (if exists)
 if os.path.exists(ALERTS_FILE):
